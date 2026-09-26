@@ -27,7 +27,7 @@ struct DecisionSuggestionService {
         }
     }
 
-    func suggest(for prompt: String) async throws -> GeneratedDecision {
+    func suggest(for prompt: String, language: AppLanguage = .system) async throws -> GeneratedDecision {
         let model = SystemLanguageModel.default
         switch model.availability {
         case .available:
@@ -42,7 +42,9 @@ struct DecisionSuggestionService {
             You turn a person's natural-language thought into an editable decision.
             Their text can mix a topic with preferences, constraints, exclusions, budget, timing, and context. Infer the decision they are trying to make without asking follow-up questions. Respect every stated constraint, especially exclusions.
 
-            Return a concise, natural question suitable for a decision screen and 4 to 8 genuinely distinct candidate options. Option names must be short enough for cards, with no explanations, qualifiers, bullets, or categories. Never choose, rank, recommend, or imply a final winner. The person will edit the candidates and Decide will make the final selection.
+            Return a concise, natural question suitable for a decision screen and 4 to 8 genuinely distinct candidate options. Option names must be short enough for rows, with no explanations, qualifiers, bullets, or categories. Never choose, rank, recommend, or imply a final winner. The person will edit the candidates and Decide will make the final selection.
+
+            \(language.foundationModelInstruction)
             """
         )
 

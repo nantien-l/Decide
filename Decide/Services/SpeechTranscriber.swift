@@ -2,6 +2,7 @@ import AVFAudio
 import Foundation
 import Speech
 
+@MainActor
 @Observable
 final class SpeechTranscriber {
     enum State: Equatable {

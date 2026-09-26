@@ -1,0 +1,6 @@
+# Local Codex/Friday sessions and logs
+.friday/
+
+# Xcode per-user state
+xcuserdata/
+*.xcuserstate

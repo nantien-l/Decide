@@ -4,21 +4,35 @@ import UIKit
 
 @MainActor
 struct HapticPerformer {
+    #if canImport(UIKit)
+    // Feedback generators are relatively expensive to create. Keeping them alive
+    // avoids allocating one for every frame of the decision animation.
+    private static let selectionGenerator = UISelectionFeedbackGenerator()
+    private static let notificationGenerator = UINotificationFeedbackGenerator()
+    private static let impactGenerator = UIImpactFeedbackGenerator(style: .light)
+    #endif
+
     func selectionChanged() {
+        guard AppSettings.hapticsEnabled else { return }
         #if canImport(UIKit)
-        UISelectionFeedbackGenerator().selectionChanged()
+        Self.selectionGenerator.selectionChanged()
+        Self.selectionGenerator.prepare()
         #endif
     }
 
     func decisionFinished() {
+        guard AppSettings.hapticsEnabled else { return }
         #if canImport(UIKit)
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        Self.notificationGenerator.notificationOccurred(.success)
+        Self.notificationGenerator.prepare()
         #endif
     }
 
     func lightTap() {
+        guard AppSettings.hapticsEnabled else { return }
         #if canImport(UIKit)
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        Self.impactGenerator.impactOccurred()
+        Self.impactGenerator.prepare()
         #endif
     }
 }
