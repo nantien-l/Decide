@@ -1,7 +1,10 @@
 import SwiftUI
 
 enum DecidePalette {
-    static let ink = Color(red: 0.08, green: 0.10, blue: 0.11)
+    // `primary` resolves to the correct high-contrast label color in both
+    // light and dark appearances. The previous fixed near-black color became
+    // unreadable against the dark system background.
+    static let ink = Color.primary
     static let accent = Color.accentColor
 }
 
